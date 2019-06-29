@@ -7,12 +7,22 @@ import com.naver.maps.map.util.FusedLocationSource
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 import android.os.Build
+import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.ImageButton
 import com.naver.maps.map.*
 import com.naver.maps.map.widget.ZoomControlView
+import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : FragmentActivity(), OnMapReadyCallback {
+class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListener {
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.menuButton -> layout_drawer.openDrawer(Gravity.LEFT)
+            R.id.mapOption -> layout_drawer.openDrawer(Gravity.RIGHT)
+        }
+    }
 
     private lateinit var myMap : NaverMap
     private lateinit var locationSource: FusedLocationSource
@@ -24,6 +34,10 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.decorView.systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+        menuButton.setOnClickListener(this)
+        mapOption.setOnClickListener(this)
+
 
 
 
