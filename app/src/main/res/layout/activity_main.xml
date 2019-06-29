@@ -6,16 +6,54 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/myMap"
-        android:name="com.naver.maps.map.MapFragment"
-    />
+
+        <fragment
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/myMap"
+                android:name="com.naver.maps.map.MapFragment"
+                app:navermap_latitude="35.1798159"
+                app:navermap_longitude="129.0750222"
+                app:navermap_zoom="12"
+        />
 
     <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
                                                  android:layout_height="match_parent">
 
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="50dp"
+                      android:layout_marginTop="45dp"
+                      android:layout_marginHorizontal="20dp"
+                      android:background="#ffffff"
+                      android:orientation="horizontal"
+                      app:layout_constraintTop_toTopOf="parent"
+        >
+            <ImageView android:layout_width="30dp"
+                       android:layout_height="30dp"
+                       android:background="#ffffff"
+                       android:src="@drawable/menu"
+                       android:scaleType="fitCenter"
+                       android:layout_marginHorizontal="10dp"
+                       android:layout_gravity="center"
+            />
+            <EditText android:layout_width="0dp"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:layout_gravity="center"
+                      android:hint="장소, 버스, 지하철, 주소 검색"
+                      android:textSize="18dp"
+            />
+            <ImageButton android:layout_width="40dp"
+                         android:layout_height="30dp"
+                         android:layout_gravity="center"
+                         android:layout_marginHorizontal="10dp"
+                         android:background="#ffffff"
+                         android:src="@drawable/mic"
+                         android:scaleType="fitCenter"
+            />
+
+
+        </LinearLayout>
 
 
     </android.support.constraint.ConstraintLayout>
