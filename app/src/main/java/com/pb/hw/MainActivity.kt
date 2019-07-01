@@ -1,18 +1,40 @@
 package com.pb.hw
 
-import android.support.v7.app.AppCompatActivity
+import SearchPlace.SearchActivity
+import android.content.Intent
+import android.location.Location
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import com.naver.maps.map.util.FusedLocationSource
-import android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 import android.os.Build
+import android.support.v4.widget.DrawerLayout
+import android.view.Gravity
 import android.view.View
 import com.naver.maps.map.*
-import com.naver.maps.map.widget.ZoomControlView
+import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : FragmentActivity(), OnMapReadyCallback {
+class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListener {
+    private var currentLocation : Location? = null
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.menuButton -> layout_drawer.openDrawer(Gravity.LEFT)
+            R.id.mapOption -> layout_drawer.openDrawer(Gravity.RIGHT)
+            R.id.search -> DoSearch()
+        }
+    }
+
+
+    private fun DoSearch() {
+        val searchIntent = Intent(this, SearchActivity::class.java)
+        if ( currentLocation != null) {
+            searchIntent.putExtra("currentLatitude", currentLocation?.latitude)
+            searchIntent.putExtra("currentLongitude", currentLocation?.longitude)
+        }
+        startActivity(searchIntent)
+        overridePendingTransition(R.anim.abc_fade_in,R.anim.anim_main)
+    }
 
     private lateinit var myMap : NaverMap
     private lateinit var locationSource: FusedLocationSource
@@ -24,6 +46,11 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.decorView.systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+        menuButton.setOnClickListener(this)
+        mapOption.setOnClickListener(this)
+        search.setOnClickListener(this)
+        layout_drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
 
 
@@ -50,8 +77,18 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback {
         uiSettings.isScaleBarEnabled = true
         uiSettings.isLocationButtonEnabled = true
         uiSettings.isZoomControlEnabled = true
-
+        myMap.addOnLocationChangeListener { location -> currentLocation = location}
     }
+
+
+    override fun onBackPressed() {
+        when {
+            layout_drawer.isDrawerOpen(Gravity.LEFT) -> layout_drawer.closeDrawer(Gravity.LEFT)
+            layout_drawer.isDrawerOpen(Gravity.RIGHT) -> layout_drawer.closeDrawer(Gravity.RIGHT)
+            else -> super.onBackPressed()
+        }
+    }
+
 
 
 
