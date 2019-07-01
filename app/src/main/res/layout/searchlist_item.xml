@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="15dp"
+        android:background="@drawable/underlinerectangular"
+        android:orientation="horizontal">
+
+    <ImageView android:layout_width="30dp"
+               android:layout_height="30dp"
+               android:layout_marginRight="20dp"
+               android:layout_marginLeft="10dp"
+               android:src="@drawable/roadview"
+               android:scaleType="fitCenter"
+    />
+
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+    >
+        <TextView
+                android:id="@+id/placeName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="자갈치시장"
+                android:textSize="20dp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"/>
+
+        <TextView
+                android:id="@+id/placeAdd"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:includeFontPadding="false"
+                android:text="부산광역시 동래구 명장로20번길 60"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="13sp" />
+    </LinearLayout>
+
+
+
+</LinearLayout>

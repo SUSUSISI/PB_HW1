@@ -42,9 +42,10 @@
                        android:id="@+id/menuButton"
             />
             <TextView android:layout_width="0dp"
-                      android:layout_height="wrap_content"
+                      android:layout_height="match_parent"
                       android:layout_weight="1"
                       android:layout_gravity="center"
+                      android:gravity="left|center"
                       android:background="@null"
                       android:text="장소, 버스, 지하철, 주소 검색"
                       android:textSize="18dp"
