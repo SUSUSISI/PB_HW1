@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
                 android:text="자갈치시장"
-                android:textSize="20dp"
+                android:textSize="17dp"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"/>
 
@@ -35,11 +35,10 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
                 android:includeFontPadding="false"
-                android:text="부산광역시 동래구 명장로20번길 60"
+                android:text="부산광역시 동래구 명장로20번길 60\n이런이런"
                 android:textColor="@android:color/darker_gray"
-                android:textSize="13sp" />
+                android:textSize="12dp" />
     </LinearLayout>
 
 

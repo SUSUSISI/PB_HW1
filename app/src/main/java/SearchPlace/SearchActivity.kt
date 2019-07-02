@@ -4,12 +4,13 @@ import android.content.Context
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import com.naver.maps.geometry.LatLng
 import com.pb.hw.R
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_search.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,6 +22,7 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var imm : InputMethodManager
     private lateinit var mRetrofit : Retrofit
     private lateinit var currentLocation : LatLng
+    private var adapter : SearchListAdapter? = null
 
     override fun onClick(v: View?) {
         when(v?.id){
@@ -44,11 +46,14 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
                 val data = response.body()
                 val list = data!!.list
 
+
                 if (list != null) {
-                    for (i in 0..list.size - 1) {
-                        Log.d("데이터 받아온 것", list.get(i).name)
-                    }
+                    adapter = SearchListAdapter(list)
+                    searchlist.adapter = adapter
+                    adapter?.notifyDataSetChanged()
                 }
+
+
             }
 
             override fun onFailure(call: Call<RetrofitModel>, t: Throwable) {
@@ -73,6 +78,8 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
+
+        searchlist.layoutManager = LinearLayoutManager(this)
 
         search_btn.setOnClickListener(this)
 
@@ -101,4 +108,6 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
         super.finish()
         overridePendingTransition(R.anim.anim_main, R.anim.abc_fade_out)
     }
+
+
 }

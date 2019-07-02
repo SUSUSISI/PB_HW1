@@ -84,7 +84,44 @@
                    android:src="@drawable/roadview"
                    app:layout_constraintRight_toRightOf="parent"
                    app:layout_constraintTop_toBottomOf="@id/mapOption"
+                   android:id="@+id/roadViewButton"
+                   android:visibility="gone"
         />
+
+
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="50dp"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      android:background="@drawable/rectangular_underline_headcircular"
+                      android:orientation="vertical"
+                      android:id="@+id/bottom_menu"
+        >
+
+             <android.support.design.widget.TabLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                 android:background="@drawable/rectangular_underline_headcircular"
+                 android:id="@+id/bottom_menu_tab"
+                 app:tabIndicatorHeight="0dp"
+             >
+             </android.support.design.widget.TabLayout>
+            <!--
+             <fragment android:layout_width="match_parent" android:layout_height="0dp"
+                       android:layout_weight="1"
+                       android:id="@+id/bottom_menu_sheet"
+                       />
+                       -->
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:alpha="0"
+            android:id="@+id/bottom_menu_invisible"
+            />
+
 
 
 
@@ -92,24 +129,195 @@
 
     </FrameLayout>
 
-    
+
+
+
     <LinearLayout android:layout_width="250dp"
                   android:layout_height="match_parent"
                   android:layout_gravity="left"
                   android:background="#ffffff"
                   android:orientation="vertical"
+                  android:id="@+id/left_menu"
+
     >
+        <LinearLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="170dp"
+                      android:orientation="horizontal"
+                      android:paddingTop="60dp"
+                      >
+
+            <ImageView android:layout_width="80dp" android:layout_height="80dp"
+                       android:src="@drawable/person"
+                       android:scaleType="fitCenter"
+                       android:layout_marginLeft="20dp"
+                       app:layout_constraintTop_toTopOf="parent"
+                       app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="80dp"
+                          android:orientation="vertical"
+                          android:gravity="center|left"
+                          android:layout_marginLeft="5dp"
+            >
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="뚜뚜벅벅"
+                          android:textColor="#000000"
+                          android:textStyle="bold"
+                          android:textSize="18dp"
+                />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                          android:text="saoldwolf"
+                />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="left|center"
+            android:clickable="true"
+            android:background="?attr/selectableItemBackground"
+            android:textSize="20dp"
+            android:paddingLeft="40dp"
+            android:text="길찾기"
+            android:textColor="#000000"
+        />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="left|center"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:textSize="20dp"
+                android:paddingLeft="40dp"
+                android:text="내비게이션"
+                android:textColor="#000000"
+        />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="left|center"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:textSize="20dp"
+                android:paddingLeft="40dp"
+                android:text="지하철노선도"
+                android:textColor="#000000"
+        />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="left|center"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:textSize="20dp"
+                android:paddingLeft="40dp"
+                android:text="즐겨찾기"
+                android:textColor="#000000"
+        />
+        
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="45dp"
+                  android:paddingLeft="40dp"
+                  android:gravity="left|center"
+                  android:textSize="30dp"
+                  android:text="-"
+                  android:textColor="#afafaf"
+        />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="left|center"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:textSize="15dp"
+                android:paddingLeft="40dp"
+                android:text="공지사항"
+                android:textColor="#3f3f3f"
+        />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="left|center"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:textSize="15dp"
+                android:paddingLeft="40dp"
+                android:text="고객센터"
+                android:textColor="#3f3f3f"
+        />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="left|center"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:textSize="15dp"
+                android:paddingLeft="40dp"
+                android:text="의견 보내기"
+                android:textColor="#3f3f3f"
+        />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="left|center"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:textSize="15dp"
+                android:paddingLeft="40dp"
+                android:text="설정"
+                android:textColor="#3f3f3f"
+        />
+
+
 
     </LinearLayout>
+
+
 
 
     <LinearLayout android:layout_width="250dp"
                   android:layout_height="match_parent"
                   android:layout_gravity="right"
-                  android:background="#ffffff"
+                  android:background="#dddddd"
                   android:orientation="vertical"
+                  android:id="@+id/right_menu"
     >
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/map_list"
+                android:scrollbars="vertical"
+                android:layout_marginTop="33dp"
+                android:paddingVertical="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/underlinerectangular"
+        />
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/option_list1"
+                android:scrollbars="vertical"
+                android:paddingVertical="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/underlinerectangular"
+        />
 
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/option_list2"
+                android:scrollbars="vertical"
+                android:paddingVertical="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#dddddd"
+        />
     </LinearLayout>
 
 
