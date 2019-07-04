@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:id="@+id/place_card_view_placePhoto"
-        android:src="@drawable/map_satelite"
+        android:background="#ccc"
         android:scaleType="centerCrop"
         />
 

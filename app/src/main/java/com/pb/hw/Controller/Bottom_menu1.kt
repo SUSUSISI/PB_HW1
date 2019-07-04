@@ -1,14 +1,14 @@
-package com.pb.hw
+package com.pb.hw.Controller
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_bottom_menu1.*
+import com.pb.hw.Controller.PlaceCardListAdapter
+import com.pb.hw.Model.PlaceCardViewItem
+import com.pb.hw.R
 import kotlinx.android.synthetic.main.fragment_bottom_menu1.view.*
 import java.text.DecimalFormat
 
@@ -21,7 +21,7 @@ class Bottom_menu1 : Fragment() {
         val view =inflater.inflate(R.layout.fragment_bottom_menu1,container,false)
         val formatter = DecimalFormat("###,###")
         placeRecommenationList.add(
-            PlaceCardViewItem(arrayListOf(R.drawable.map_satelite),"회국수할매집")
+            PlaceCardViewItem(arrayListOf(R.drawable.map_satelite), "회국수할매집")
                 .placeType("한식")
                 .placeExplanation("백종원3대천왕 김준현이 호로록 다녀간 부산 맛집")
                 .placeDistance(formatter.format(443))
@@ -29,7 +29,7 @@ class Bottom_menu1 : Fragment() {
                 .placePrice(formatter.format(5000))
                 .placeTag("회국수  비빔국수  충무김밥  수수한  착한가격"))
         placeRecommenationList.add(
-            PlaceCardViewItem(arrayListOf(R.drawable.map_satelite),"회국수할매집")
+            PlaceCardViewItem(arrayListOf(R.drawable.map_satelite), "회국수할매집")
                 .placeType("한식")
                 .placeExplanation("백종원3대천왕 김준현이 호로록 다녀간 부산 맛집")
                 .placeDistance(formatter.format(443))
@@ -37,7 +37,7 @@ class Bottom_menu1 : Fragment() {
                 .placePrice(formatter.format(5000))
                 .placeTag("회국수  비빔국수  충무김밥  수수한  착한가격"))
         placeRecommenationList.add(
-            PlaceCardViewItem(arrayListOf(R.drawable.map_satelite),"회국수할매집")
+            PlaceCardViewItem(arrayListOf(R.drawable.map_satelite), "회국수할매집")
                 .placeType("한식")
                 .placeExplanation("백종원3대천왕 김준현이 호로록 다녀간 부산 맛집")
                 .placeDistance(formatter.format(443))
@@ -45,7 +45,7 @@ class Bottom_menu1 : Fragment() {
                 .placePrice(formatter.format(5000))
                 .placeTag("회국수  비빔국수  충무김밥  수수한  착한가격"))
         placeRecommenationList.add(
-            PlaceCardViewItem(arrayListOf(R.drawable.map_satelite),"회국수할매집")
+            PlaceCardViewItem(arrayListOf(R.drawable.map_satelite), "회국수할매집")
                 .placeType("한식")
                 .placeExplanation("백종원3대천왕 김준현이 호로록 다녀간 부산 맛집")
                 .placeDistance(formatter.format(443))
@@ -54,7 +54,7 @@ class Bottom_menu1 : Fragment() {
                 .placeTag("회국수  비빔국수  충무김밥  수수한  착한가격"))
 
         placeRecommenationList.add(
-            PlaceCardViewItem(arrayListOf(R.drawable.map_satelite),"회국수할매집")
+            PlaceCardViewItem(arrayListOf(R.drawable.map_satelite), "회국수할매집")
                 .placeType("한식")
                 .placeExplanation("백종원3대천왕 김준현이 호로록 다녀간 부산 맛집")
                 .placeDistance(formatter.format(443))

@@ -1,18 +1,13 @@
-package com.pb.hw
+package com.pb.hw.Controller
 
-import SearchPlace.RetrofitModel
-import SearchPlace.SearchListAdapter
-import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.pb.hw.Model.MapItem
+import com.pb.hw.R
 import kotlinx.android.synthetic.main.maplist_item.view.*
-import kotlinx.android.synthetic.main.searchlist_item.view.*
-
 
 
 class MapListAdapter(val mapList: ArrayList<MapItem>) : RecyclerView.Adapter<MapListAdapter.ViewHolder>(){
@@ -22,16 +17,15 @@ class MapListAdapter(val mapList: ArrayList<MapItem>) : RecyclerView.Adapter<Map
     private var selectedView : View? = null
 
     override fun getItemCount(): Int {
-        Log.d("initial", "size : ${mapList.size}")
         return mapList.size
     }
 
-    override fun onCreateViewHolder(mapItem: ViewGroup, viewType: Int): MapListAdapter.ViewHolder {
+    override fun onCreateViewHolder(mapItem: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(mapItem.context).inflate(R.layout.maplist_item,mapItem, false)
         return ViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: MapListAdapter.ViewHolder, p1: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, p1: Int) {
         holder.bindItems(mapList[p1])
     }
 
@@ -39,10 +33,8 @@ class MapListAdapter(val mapList: ArrayList<MapItem>) : RecyclerView.Adapter<Map
 
         fun bindItems(mapItem : MapItem){
 
-            Log.d("initial", mapItem.name)
             itemView.mapname.text = mapItem.name
-            itemView.mapimage.setImageResource(mapItem.image)
-
+            GlideApp.with(itemView).load(mapItem.image).override(100,100).into(itemView.mapimage)
             if(layoutPosition == 0) {
                 select(layoutPosition,itemView)
             }
@@ -54,13 +46,12 @@ class MapListAdapter(val mapList: ArrayList<MapItem>) : RecyclerView.Adapter<Map
         }
     }
 
-    fun setOnListClickListener(listener: ListClickListener ){
+    fun setOnListClickListener(listener: ListClickListener){
         listClickListener = listener
     }
 
     fun select(pos : Int, v :View ){
 
-        Log.d("Clicked", v.mapname.text as String?)
         when(selectedPos){
             -1 -> {
                 selectedPos = pos

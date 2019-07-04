@@ -1,5 +1,7 @@
-package SearchPlace
+package com.pb.hw.Controller
 
+import com.pb.hw.Retrofit.RetrofitInterface
+import com.pb.hw.Retrofit.RetrofitModel
 import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +12,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import com.naver.maps.geometry.LatLng
 import com.pb.hw.R
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_search.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,14 +23,20 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var imm : InputMethodManager
     private lateinit var mRetrofit : Retrofit
     private lateinit var currentLocation : LatLng
-    val searchHistorydb = HistoryDB.MyDataBaseHelper(this,"search_table")
+    val searchHistorydb = MyDataBaseHelper(this, "search_table")
     private var adapter : SearchListAdapter? = null
 
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.backButton -> finish()
-            R.id.search_btn -> do_search()
+            R.id.delete_btn -> deleteHistory()
         }
+    }
+
+    private fun deleteHistory() {
+        searchHistorydb.deleteAllData()
+        searchlist.adapter = SearchListAdapter(searchHistorydb.getAllData())
+        searchlist.adapter?.notifyDataSetChanged()
     }
 
     private fun do_search() {
@@ -47,21 +54,17 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
                 val data = response.body()
                 val list = data!!.list
 
-
                 if (list != null) {
                     adapter = SearchListAdapter(list)
                     searchlist.adapter = adapter
                     adapter?.notifyDataSetChanged()
                 }
 
-
             }
 
             override fun onFailure(call: Call<RetrofitModel>, t: Throwable) {
 
             }
-
-
         })
 
 
@@ -72,22 +75,19 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         setContentView(R.layout.activity_search)
-        backButton.setOnClickListener(this)
 
         adapter = SearchListAdapter(searchHistorydb.getAllData())
         searchlist.adapter = adapter
-        adapter?.notifyDataSetChanged()
-
+        searchlist.adapter?.notifyDataSetChanged()
+        searchlist.layoutManager = LinearLayoutManager(this)
 
         currentLocation = LatLng(intent.getDoubleExtra("currentLatitude", 0.0),intent.getDoubleExtra("currentLongitude", 0.0))
 
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
-
-        searchlist.layoutManager = LinearLayoutManager(this)
-
-        search_btn.setOnClickListener(this)
+        backButton.setOnClickListener(this)
+        delete_btn.setOnClickListener(this)
 
         search_input.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {

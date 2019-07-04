@@ -1,10 +1,11 @@
-package HistoryDB
+package com.pb.hw.Controller
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.pb.hw.Retrofit.RetrofitModel
 
 class MyDataBaseHelper(context: Context?, name: String?, factory: SQLiteDatabase.CursorFactory?, version: Int) :
     SQLiteOpenHelper(context, name, factory, version) {
@@ -24,19 +25,30 @@ class MyDataBaseHelper(context: Context?, name: String?, factory: SQLiteDatabase
         db?.execSQL("create table ${TABLE_NAME} (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT, ADDRESS TEXT, LATITUDE DOUBLE, LONGITUDE DOUBLE )")
     }
 
+    fun dropTable(){
+        val db = writableDatabase
+        db.execSQL("DROP TABLE $TABLE_NAME")
+    }
+
     override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {}
 
-    fun insertData(place : SearchPlace.RetrofitModel.Place) : Boolean{
+    fun insertData(place : RetrofitModel.Place) : Boolean{
         val item = ContentValues()
         item.put(COL_2,place.name)
         item.put(COL_3,place.add)
         item.put(COL_4,place.latitude)
         item.put(COL_5,place.longitude)
 
-        val cursor = writableDatabase.rawQuery("select ADDRESS = '${place.add}' from ${TABLE_NAME}",null)
+        val address = place.add
+        val cursor = writableDatabase.rawQuery("select * from $TABLE_NAME where ADDRESS = '$address'",null)
 
-        if(cursor.count >= 1) {
+        Log.d("cursorSize", cursor.count.toString())
+        if(cursor.moveToNext()) {
             Log.d("db","이미 data 있음")
+            Log.d("Name",cursor.getString(1))
+            Log.d("Add",cursor.getString(2))
+            Log.d("Lat",cursor.getString(3))
+            Log.d("Long",cursor.getString(4))
             return true
         }
 
@@ -47,16 +59,17 @@ class MyDataBaseHelper(context: Context?, name: String?, factory: SQLiteDatabase
     }
 
 
-    fun getAllData() : ArrayList<SearchPlace.RetrofitModel.Place> {
+    fun getAllData() : ArrayList<RetrofitModel.Place> {
         val cursor = writableDatabase.rawQuery("select * from ${TABLE_NAME}", null)
-        var list = ArrayList <SearchPlace.RetrofitModel.Place>()
+        var list = ArrayList <RetrofitModel.Place>()
+        Log.d("cursorSize", cursor.count.toString())
         while(cursor.moveToNext()) {
             Log.d("Name",cursor.getString(1))
             Log.d("Add",cursor.getString(2))
             Log.d("Lat",cursor.getString(3))
             Log.d("Long",cursor.getString(4))
             list.add(
-                SearchPlace.RetrofitModel.Place(
+                RetrofitModel.Place(
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getDouble(4),
@@ -64,6 +77,7 @@ class MyDataBaseHelper(context: Context?, name: String?, factory: SQLiteDatabase
                 )
             )
         }
+
         return list
     }
     fun deleteAllData() { writableDatabase.execSQL("delete from ${TABLE_NAME}")}

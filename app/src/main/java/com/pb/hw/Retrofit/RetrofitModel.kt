@@ -1,4 +1,4 @@
-package SearchPlace
+package com.pb.hw.Retrofit
 
 import com.google.gson.annotations.SerializedName
 

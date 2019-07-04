@@ -1,12 +1,12 @@
-package com.pb.hw
+package com.pb.hw.Controller
 
 import android.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.maplist_item.view.*
+import com.pb.hw.Model.OptionItem
+import com.pb.hw.R
 import kotlinx.android.synthetic.main.optionlist_item.view.*
 
 class OptionListAdapter(val optionList: ArrayList<OptionItem>) : RecyclerView.Adapter<OptionListAdapter.ViewHolder>(){
@@ -17,13 +17,12 @@ class OptionListAdapter(val optionList: ArrayList<OptionItem>) : RecyclerView.Ad
         return optionList.size
     }
 
-    override fun onCreateViewHolder(optionItem: ViewGroup, viewType: Int): OptionListAdapter.ViewHolder {
+    override fun onCreateViewHolder(optionItem: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(optionItem.context).inflate(R.layout.optionlist_item,optionItem, false)
-        Log.d("option", optionList.size.toString())
         return ViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: OptionListAdapter.ViewHolder, p1: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, p1: Int) {
         holder.bindItems(optionList[p1])
     }
 
@@ -42,7 +41,7 @@ class OptionListAdapter(val optionList: ArrayList<OptionItem>) : RecyclerView.Ad
         }
     }
 
-    fun setOnListClickListener(listener: ListClickListener ){
+    fun setOnListClickListener(listener: ListClickListener){
         listClickListener = listener
     }
 

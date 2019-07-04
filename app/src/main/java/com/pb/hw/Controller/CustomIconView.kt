@@ -1,13 +1,11 @@
-package com.pb.hw
+package com.pb.hw.Controller
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.Color
-import android.graphics.PorterDuff
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.pb.hw.R
 import kotlinx.android.synthetic.main.bottom_menu_near_place_icon.view.*
 
 
@@ -23,7 +21,7 @@ class CustomIconView : LinearLayout {
     }
 
     private fun getAttrs(attrs: AttributeSet) {
-        val typedArray = context.obtainStyledAttributes(attrs,R.styleable.BottomMenuNearPlaceIcon)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.BottomMenuNearPlaceIcon)
         setTypeArray(typedArray)
 
     }
@@ -31,8 +29,14 @@ class CustomIconView : LinearLayout {
     private fun setTypeArray(typedArray: TypedArray?) {
 
         if(typedArray != null){
-            symbol.setBackgroundResource(typedArray.getResourceId(R.styleable.BottomMenuNearPlaceIcon_bg, R.drawable.circular_orange))
-            symbol.setImageResource(typedArray.getResourceId(R.styleable.BottomMenuNearPlaceIcon_symbol,R.drawable.restaurant))
+            symbol.setBackgroundResource(typedArray.getResourceId(
+                R.styleable.BottomMenuNearPlaceIcon_bg,
+                R.drawable.circular_orange
+            ))
+            symbol.setImageResource(typedArray.getResourceId(
+                R.styleable.BottomMenuNearPlaceIcon_symbol,
+                R.drawable.restaurant
+            ))
 
             //symbol.setColorFilter(Color.parseColor("#000000"))
 

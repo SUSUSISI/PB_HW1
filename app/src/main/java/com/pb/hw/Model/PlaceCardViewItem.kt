@@ -1,4 +1,4 @@
-package com.pb.hw
+package com.pb.hw.Model
 
 
 data class PlaceCardViewItem(
@@ -13,27 +13,27 @@ data class PlaceCardViewItem(
     var placePrice = "-"
 
 
-    fun placeExplanation (s : String) : PlaceCardViewItem{
+    fun placeExplanation (s : String) : PlaceCardViewItem {
         placeExplanation = s
         return this
     }
-    fun placeType (s : String) : PlaceCardViewItem{
+    fun placeType (s : String) : PlaceCardViewItem {
         placeType = s
         return this
     }
-    fun placeTag (s : String) : PlaceCardViewItem{
+    fun placeTag (s : String) : PlaceCardViewItem {
         placeTag = s
         return this
     }
-    fun placeDistance (s : String) : PlaceCardViewItem{
+    fun placeDistance (s : String) : PlaceCardViewItem {
         placeDistance = s
         return this
     }
-    fun placeReviewCount (s : String) : PlaceCardViewItem{
+    fun placeReviewCount (s : String) : PlaceCardViewItem {
         placeReviewCount = s
         return this
     }
-    fun placePrice (s : String) : PlaceCardViewItem{
+    fun placePrice (s : String) : PlaceCardViewItem {
         placePrice = s
         return this
     }

@@ -1,39 +1,37 @@
-package com.pb.hw
+package com.pb.hw.Controller
 
-import SearchPlace.SearchActivity
 import android.content.Intent
 import android.graphics.Point
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
-import androidx.fragment.app.FragmentActivity
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import android.util.Log
 import android.view.GestureDetector
 import android.view.Gravity
 import android.view.View
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
+import com.pb.hw.Model.MapItem
+import com.pb.hw.Model.OptionItem
+import com.pb.hw.R
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_bottom_menu1.*
-import java.text.DecimalFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
 
-class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListener, ListClickListener {
+class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListener,
+    ListClickListener {
 
     private var optionList1 = ArrayList<OptionItem>()
     private var optionList2 = ArrayList<OptionItem>()
     var screeanSize = Point()
+    private lateinit var db: MyDataBaseHelper
 
 
     override fun onListClick(what: Int, pos: Int) {
@@ -114,13 +112,12 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.decorView.systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-
-
+        //db = MyDataBaseHelper(applicationContext,"search_table")
+        //db.dropTable()
         windowManager.defaultDisplay.getSize(screeanSize)
-        bottom_menu_tab.layoutParams.width = screeanSize.x - (20*resources.displayMetrics.density).toInt()
+        bottom_menu_tab.layoutParams.width = screeanSize.x - (20 * resources.displayMetrics.density).toInt()
         bottom_menu_tab.requestLayout()
 
         menuButton.setOnClickListener(this)
@@ -167,26 +164,24 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListene
             }
         })
         bottom_menu_viewpager.setPagingEnabled(false)
-        bottom_menu_viewpager.adapter = BottomMenuAdapter(supportFragmentManager, bottom_menu_tab.tabCount)
-
+        bottom_menu_viewpager.adapter =
+            BottomMenuAdapter(supportFragmentManager, bottom_menu_tab.tabCount)
 
 
         val bottomSheetBehavior = BottomSheetBehavior.from(bottomsheet)
-        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
 
             override fun onSlide(p0: View, p1: Float) {
-                val change = (p1*100).toInt()
-                if(change <= 20) {
-                    bottom_menu_tab.layoutParams.width = screeanSize.x + ((change-20)*resources.displayMetrics.density).toInt()
+                val change = (p1 * 100).toInt()
+                if (change <= 20) {
+                    bottom_menu_tab.layoutParams.width =
+                        screeanSize.x + ((change - 20) * resources.displayMetrics.density).toInt()
                     bottom_menu_tab.requestLayout()
-                }
-                else{
+                } else {
                     bottom_menu_tab.layoutParams.width = screeanSize.x
                     bottom_menu_tab.requestLayout()
                 }
-
-
-                }
+            }
 
 
             override fun onStateChanged(p0: View, p1: Int) {
@@ -194,8 +189,6 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListene
             }
 
         })
-
-
 
 
     }
@@ -218,10 +211,10 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListene
         }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            searchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            searchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            searchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+            searchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
         }
         startActivity(searchIntent)
         overridePendingTransition(R.anim.abc_fade_in, R.anim.anim_main)
@@ -252,7 +245,14 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListene
         option_list1.adapter = adapter1
 
         option_list2.layoutManager = LinearLayoutManager(this)
-        optionList2.add(OptionItem(R.drawable.traffic_light, "교통정보", R.drawable.check_off, 0))
+        optionList2.add(
+            OptionItem(
+                R.drawable.traffic_light,
+                "교통정보",
+                R.drawable.check_off,
+                0
+            )
+        )
         optionList2.add(OptionItem(R.drawable.bus, "대중교통", R.drawable.check_off, 0))
         optionList2.add(OptionItem(R.drawable.cctv, "CCTV", R.drawable.check_off, 0))
         optionList2.add(OptionItem(R.drawable.cycle, "자전거", R.drawable.check_off, 0))
@@ -284,10 +284,6 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListene
         if (intent.hasExtra("name")) {
             searchMarker.position =
                 LatLng(intent.getDoubleExtra("latitude", 0.0), intent.getDoubleExtra("longitude", 0.0))
-            Log.d(
-                "SearchPosition",
-                "${intent.getDoubleExtra("latitude", 0.0)} , ${intent.getDoubleExtra("longitude", 0.0)}"
-            )
             searchMarker.map = myMap
 
             val cameraUpdate = CameraUpdate.scrollTo(searchMarker.position)

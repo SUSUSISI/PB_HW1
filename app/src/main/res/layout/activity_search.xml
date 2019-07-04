@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="#cfcfcf"
         android:orientation="vertical"
-        tools:context="SearchPlace.SearchActivity"
+        tools:context=".Controller.SearchActivity"
 >
 
     <LinearLayout android:layout_width="match_parent"
@@ -47,21 +47,22 @@
                      android:background="#ffffff"
                      android:src="@drawable/mic_black"
                      android:scaleType="fitCenter"
-                     android:id="@+id/search_btn"
+                     android:id="@+id/delete_btn"
         />
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="0dp"
                   android:layout_weight="1"
     >
+
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/searchlist"
-                android:scrollbars="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/underlinerectangular"
-                android:layout_marginTop="5dp"
-        />
+            android:id="@+id/searchlist"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/underlinerectangular"
+            android:layout_marginTop="5dp"
+            />
     </LinearLayout>
 
 

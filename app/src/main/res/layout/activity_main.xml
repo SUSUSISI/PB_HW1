@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/layout_drawer"
-    tools:context=".MainActivity">
+    tools:context=".Controller.MainActivity">
 
 
     <FrameLayout
@@ -165,12 +165,12 @@
                     >
                 </com.google.android.material.tabs.TabLayout>
 
-                <com.pb.hw.SwipeViewPager
+                <com.pb.hw.Controller.SwipeViewPager
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:id="@+id/bottom_menu_viewpager"
-                    ></com.pb.hw.SwipeViewPager>
+                    ></com.pb.hw.Controller.SwipeViewPager>
 
             </LinearLayout>
 

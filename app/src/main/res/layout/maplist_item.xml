@@ -8,7 +8,6 @@
     <ImageView android:layout_width="50dp"
                android:layout_height="50dp"
                android:layout_gravity="center"
-               android:src="@drawable/map_standard"
                android:scaleType="centerCrop"
                android:background="@drawable/rectangularwithline"
                android:id="@+id/mapimage"

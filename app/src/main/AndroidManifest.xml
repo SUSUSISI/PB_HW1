@@ -21,10 +21,10 @@
 
 
 
-        <activity android:name="SearchPlace.SearchActivity">
+        <activity android:name=".Controller.SearchActivity">
         </activity>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".Controller.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
