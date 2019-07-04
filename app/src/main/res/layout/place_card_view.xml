@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="30dp"
+              android:orientation="vertical"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:id="@+id/place_card_view_placePhoto"
+        android:src="@drawable/map_satelite"
+        android:scaleType="centerCrop"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="회국수할매집"
+            android:paddingTop="10dp"
+            android:textColor="#000000"
+            android:id="@+id/place_card_view_placeName"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/place_card_view_placeType"
+            android:text="한식"
+            android:textSize="10dp"
+            />
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:singleLine="true"
+        android:id="@+id/place_card_view_placeExplanation"
+        android:text="백종원3대천왕 김준현이 호로록 다녀간 부산 맛집"
+        android:textColor="#000000"
+        android:textSize="11dp"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="443"
+            android:id="@+id/place_card_view_placeDistance"
+            android:textSize="12dp"
+            android:textColor="#ed6b6b"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="m"
+            android:textSize="12dp"
+            android:textColor="#ed6b6b"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            android:textColor="#cccccc"
+            android:layout_marginHorizontal="4dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="리뷰"
+            android:textSize="11dp"
+            android:textColor="#000000"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:id="@+id/place_card_view_placeReviewCount"
+            android:text="160"
+            android:textColor="#000000"
+            android:textSize="11dp"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            android:textColor="#cccccc"
+            android:layout_marginHorizontal="4dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="평균"
+            android:textSize="11dp"
+            android:textColor="#000000"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/place_card_view_placePrice"
+            android:layout_marginLeft="4dp"
+            android:text="5,000"
+            android:textColor="#000000"
+            android:textSize="11dp"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:layout_marginLeft="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="원"
+            android:textSize="11dp"
+            android:textColor="#000000"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/place_card_view_placeTag"
+        android:textColor="#aaaaaa"
+        android:textSize="11dp"
+        android:text="회국수  비빔국수  충무김밥  수수한  착한가격"
+        />
+</LinearLayout>

@@ -2,9 +2,9 @@ package SearchPlace
 
 import android.content.Context
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -22,6 +22,7 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var imm : InputMethodManager
     private lateinit var mRetrofit : Retrofit
     private lateinit var currentLocation : LatLng
+    val searchHistorydb = HistoryDB.MyDataBaseHelper(this,"search_table")
     private var adapter : SearchListAdapter? = null
 
     override fun onClick(v: View?) {
@@ -73,6 +74,11 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_search)
         backButton.setOnClickListener(this)
 
+        adapter = SearchListAdapter(searchHistorydb.getAllData())
+        searchlist.adapter = adapter
+        adapter?.notifyDataSetChanged()
+
+
         currentLocation = LatLng(intent.getDoubleExtra("currentLatitude", 0.0),intent.getDoubleExtra("currentLongitude", 0.0))
 
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -92,6 +98,7 @@ class SearchActivity : AppCompatActivity(), View.OnClickListener {
             true
         }
     }
+
 
 
     private fun setRetrofitInit() {

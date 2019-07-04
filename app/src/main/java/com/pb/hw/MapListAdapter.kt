@@ -5,7 +5,7 @@ import SearchPlace.SearchListAdapter
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,13 +43,13 @@ class MapListAdapter(val mapList: ArrayList<MapItem>) : RecyclerView.Adapter<Map
             itemView.mapname.text = mapItem.name
             itemView.mapimage.setImageResource(mapItem.image)
 
-            if(position == 0) {
-                select(position,itemView)
+            if(layoutPosition == 0) {
+                select(layoutPosition,itemView)
             }
 
             itemView.setOnClickListener {
-                select(position, itemView)
-                listClickListener.onListClick(0,position)
+                select(layoutPosition, itemView)
+                listClickListener.onListClick(0,layoutPosition)
             }
         }
     }
@@ -67,7 +67,7 @@ class MapListAdapter(val mapList: ArrayList<MapItem>) : RecyclerView.Adapter<Map
                 selectedView = v
                 selectedView!!.mapname.setTextColor(Color.parseColor("#000000"))
             }
-            pos -> null
+            pos -> {;}
             else -> {
                 selectedView!!.mapname.setTextColor(Color.parseColor("#afafaf"))
                 v.mapname.setTextColor(Color.parseColor("#000000"))

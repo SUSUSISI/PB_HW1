@@ -1,7 +1,7 @@
 package com.pb.hw
 
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +36,7 @@ class OptionListAdapter(val optionList: ArrayList<OptionItem>) : RecyclerView.Ad
             itemView.option_name.text = optionItem.name
             itemView.option_check.setImageResource(optionItem.check_icon)
             itemView.setOnClickListener {
-                select(position, itemView)
+                select(layoutPosition, itemView)
 
             }
         }

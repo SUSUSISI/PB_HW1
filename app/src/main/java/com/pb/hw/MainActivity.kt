@@ -2,31 +2,39 @@ package com.pb.hw
 
 import SearchPlace.SearchActivity
 import android.content.Intent
+import android.graphics.Point
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.FragmentActivity
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
+import androidx.fragment.app.FragmentActivity
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.GestureDetector
 import android.view.Gravity
-import android.view.MotionEvent
 import android.view.View
 import android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_bottom_menu1.*
+import java.text.DecimalFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListener, ListClickListener {
 
     private var optionList1 = ArrayList<OptionItem>()
     private var optionList2 = ArrayList<OptionItem>()
+    var screeanSize = Point()
+
 
     override fun onListClick(what: Int, pos: Int) {
         when (what) {
@@ -103,80 +111,17 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListene
     private lateinit var gestureDetector: GestureDetector
 
 
-    private fun initialBottomMenu() {
-        val tab = TabLayout.Tab()
-
-        /*
-        bottom_menu_tab.addTab(bottom_menu_tab.newTab().setIcon(R.drawable.roadview))
-        bottom_menu_tab.addTab(bottom_menu_tab.newTab().setIcon(R.drawable.bus))
-        bottom_menu_tab.addTab(bottom_menu_tab.newTab().setIcon(R.drawable.car))
-        bottom_menu_tab.addTab(bottom_menu_tab.newTab().setIcon(R.drawable.next))
-        */
-
-
-
-        gestureDetector = GestureDetector(this, object : GestureDetector.OnGestureListener {
-
-            override fun onShowPress(p0: MotionEvent?) { ; }
-            override fun onSingleTapUp(p0: MotionEvent?): Boolean { return true }
-            override fun onDown(p0: MotionEvent?): Boolean { return true }
-            override fun onFling(p0: MotionEvent?, p1: MotionEvent?, p2: Float, p3: Float): Boolean {
-                Log.d("Fling!!","Fling!!")
-                return true
-            }
-
-            override fun onScroll(p0: MotionEvent?, p1: MotionEvent?, p2: Float, p3: Float): Boolean {
-                if (p1 != null && p0 != null) {
-                    val dis = p1.rawY.toInt() - p0.rawY.toInt()
-                    if(touchY != dis){
-                        Log.d("scroll", dis.toString())
-                        bottom_menu.layoutParams.height = bottom_menu.layoutParams.height + touchY - dis
-                        bottom_menu_invisible.layoutParams.height = bottom_menu.layoutParams.height + touchY - dis
-                        touchY = dis
-                        bottom_menu.requestLayout()
-                        bottom_menu_invisible.requestLayout()
-                        Log.d("size", bottom_menu.layoutParams.height.toString())
-                    }
-                }
-
-                return true
-            }
-            override fun onLongPress(p0: MotionEvent?) { ; }
-        })
-
-        bottom_menu_tab.setOnTouchListener { view, motionEvent ->
-            when(motionEvent.action){
-                MotionEvent.ACTION_DOWN -> {
-                    touchY = 0
-                    Log.d("Touched", motionEvent.rawY.toInt().toString())
-                }
-            }
-            gestureDetector.onTouchEvent(motionEvent)
-        }
-
-
-
-        bottom_menu_invisible.setOnTouchListener { view, motionEvent ->
-            when(motionEvent.action){
-                MotionEvent.ACTION_DOWN -> {
-                    touchY = 0
-                    Log.d("Touched", motionEvent.rawY.toInt().toString())
-                }
-            }
-            gestureDetector.onTouchEvent(motionEvent)
-        }
-
-
-        bottom_menu.setOnTouchListener { view, motionEvent -> true}
-
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             window.decorView.systemUiVisibility = SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+
+
+        windowManager.defaultDisplay.getSize(screeanSize)
+        bottom_menu_tab.layoutParams.width = screeanSize.x - (20*resources.displayMetrics.density).toInt()
+        bottom_menu_tab.requestLayout()
 
         menuButton.setOnClickListener(this)
         mapOption.setOnClickListener(this)
@@ -200,6 +145,61 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListene
             FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
     }
 
+    private fun initialBottomMenu() {
+        bottom_menu_tab.addTab(bottom_menu_tab.newTab().setIcon(R.drawable.roadview))
+        bottom_menu_tab.addTab(bottom_menu_tab.newTab().setIcon(R.drawable.bus))
+        bottom_menu_tab.addTab(bottom_menu_tab.newTab().setIcon(R.drawable.car))
+        bottom_menu_tab.addTab(bottom_menu_tab.newTab().setIcon(R.drawable.next))
+        bottom_menu_tab.getTabAt(0)?.icon?.alpha = 50
+
+        bottom_menu_tab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabReselected(p0: TabLayout.Tab?) {
+            }
+
+            override fun onTabUnselected(p0: TabLayout.Tab?) {
+                p0?.icon?.alpha = 255
+            }
+
+            override fun onTabSelected(p0: TabLayout.Tab?) {
+                p0?.icon?.alpha = 50
+
+                p0?.position?.let { bottom_menu_viewpager.setCurrentItem(it, false) }
+            }
+        })
+        bottom_menu_viewpager.setPagingEnabled(false)
+        bottom_menu_viewpager.adapter = BottomMenuAdapter(supportFragmentManager, bottom_menu_tab.tabCount)
+
+
+
+        val bottomSheetBehavior = BottomSheetBehavior.from(bottomsheet)
+        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+
+            override fun onSlide(p0: View, p1: Float) {
+                val change = (p1*100).toInt()
+                if(change <= 20) {
+                    bottom_menu_tab.layoutParams.width = screeanSize.x + ((change-20)*resources.displayMetrics.density).toInt()
+                    bottom_menu_tab.requestLayout()
+                }
+                else{
+                    bottom_menu_tab.layoutParams.width = screeanSize.x
+                    bottom_menu_tab.requestLayout()
+                }
+
+
+                }
+
+
+            override fun onStateChanged(p0: View, p1: Int) {
+
+            }
+
+        })
+
+
+
+
+    }
+
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -216,15 +216,21 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListene
             searchIntent.putExtra("currentLatitude", currentLocation?.latitude)
             searchIntent.putExtra("currentLongitude", currentLocation?.longitude)
         }
-        searchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            searchIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            searchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        }
         startActivity(searchIntent)
         overridePendingTransition(R.anim.abc_fade_in, R.anim.anim_main)
     }
 
     private fun initialDrawer() {
 
-        left_menu.setOnTouchListener(View.OnTouchListener { view, motionEvent -> true })
-        right_menu.setOnTouchListener(View.OnTouchListener { view, motionEvent -> true })
+        left_menu.setOnTouchListener(View.OnTouchListener { _, _ -> true })
+        right_menu.setOnTouchListener(View.OnTouchListener { _, _ -> true })
 
 
         map_list.layoutManager = LinearLayoutManager(this)
@@ -266,8 +272,11 @@ class MainActivity : FragmentActivity(), OnMapReadyCallback, View.OnClickListene
         val uiSettings = myMap.uiSettings
 
         uiSettings.isScaleBarEnabled = true
-        uiSettings.isLocationButtonEnabled = true
         uiSettings.isZoomControlEnabled = true
+        uiSettings.isLocationButtonEnabled = false
+
+        myMapLocationButton.map = myMap
+
         myMap.addOnLocationChangeListener { location -> currentLocation = location }
 
 

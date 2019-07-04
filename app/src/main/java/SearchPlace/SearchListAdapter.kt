@@ -2,7 +2,7 @@ package SearchPlace
 
 import android.content.Context
 import android.content.Intent
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +16,8 @@ import kotlin.coroutines.coroutineContext
 class SearchListAdapter(val searchList: ArrayList<RetrofitModel.Place>) : RecyclerView.Adapter<SearchListAdapter.ViewHolder>(){
 
         override fun getItemCount(): Int {
-            return searchList.size-1
+            Log.d("size", (searchList.size).toString())
+            return searchList.size
         }
 
         override fun onCreateViewHolder(place: ViewGroup, viewType: Int): SearchListAdapter.ViewHolder {
@@ -28,7 +29,7 @@ class SearchListAdapter(val searchList: ArrayList<RetrofitModel.Place>) : Recycl
             holder.bindItems(searchList[p1])
         }
 
-        inner class ViewHolder(view :View):RecyclerView.ViewHolder(view){
+        inner class ViewHolder(view :View): RecyclerView.ViewHolder(view){
             fun bindItems(place : RetrofitModel.Place){
                 itemView.placeName.text = place.name
                 itemView.placeAdd.text = place.add
@@ -36,7 +37,7 @@ class SearchListAdapter(val searchList: ArrayList<RetrofitModel.Place>) : Recycl
 
                 itemView.setOnClickListener {
 
-                    select(itemView.context,position)
+                    select(itemView.context,layoutPosition)
                 }
             }
 
@@ -50,6 +51,8 @@ class SearchListAdapter(val searchList: ArrayList<RetrofitModel.Place>) : Recycl
             mIntent.putExtra("latitude",searchList[pos].latitude)
             mIntent.putExtra("longitude",searchList[pos].longitude)
             context.startActivity(mIntent)
+
+            HistoryDB.MyDataBaseHelper(context,"search_table").insertData(searchList[pos])
         }
 
 }
